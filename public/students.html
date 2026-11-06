@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Students — Harsha CourseHub</title>
+  <meta name="description" content="Harsha CourseHub - Student Directory and Academic Enrollment Management.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232855A6'><path d='M12 3L1 9l11 6 9-4.91V17h2V9L12 3z'/></svg>">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">HC</div>
+        <div class="brand-text">
+          <h1>Harsha CourseHub</h1>
+          <p>Smart Student Course Registration System</p>
+        </div>
+      </div>
+
+      <div class="sidebar-db-status">
+        <span class="db-status-pill">
+          <span class="status-dot offline" id="db-status-dot"></span>
+          <span id="db-status-text">Checking Database...</span>
+        </span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Academic Management</div>
+        <a href="index.html" class="nav-item">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+          Dashboard
+        </a>
+        <a href="students.html" class="nav-item active">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
+          Students
+        </a>
+        <a href="courses.html" class="nav-item">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a10.97 10.97 0 00-.05 1.949v2.247c0 1.259.78 2.378 1.954 2.802l3.452 1.246a1 1 0 00.688 0l3.452-1.246A3 3 0 0016.7 12.247V9.999c0-.655-.018-1.307-.05-1.948l2.606-1.116a1 1 0 000-1.84l-7-3zM9 14.5a1 1 0 112 0 1 1 0 01-2 0z"/></svg>
+          Courses
+        </a>
+        <a href="register.html" class="nav-item">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+          Register Course
+        </a>
+        <a href="registrations.html" class="nav-item">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg>
+          Registrations
+        </a>
+
+        <div class="nav-section-title">Reports</div>
+        <a href="/api/reports/registrations/csv" class="nav-item" download>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          Export Report
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        Harsha CourseHub<br>
+        Designed &amp; Developed by <span class="author">Harsha</span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Navigation Menu">☰</button>
+          <div class="page-breadcrumb">
+            <h1 class="page-title">Students</h1>
+            <span class="page-subtitle">Manage student records</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <!-- Exactly ONE primary button, no duplicates -->
+          <button class="btn btn-primary btn-sm" onclick="StudentsPage.openAddModal()">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+            Add Student
+          </button>
+        </div>
+      </header>
+
+      <main class="page-content">
+        <!-- DB Offline Notice Banner -->
+        <div class="db-alert-banner" id="db-connection-banner">
+          <div>
+            <strong>Database Notice:</strong> Unable to connect to MySQL. Verify your MySQL service is running.
+          </div>
+        </div>
+
+        <!-- Student Directory Card -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h2>Student Directory</h2>
+              <p>Active university student records and academic affiliations</p>
+            </div>
+            <div id="student-count-badge" style="font-size: 0.78rem; color: var(--text-secondary); font-weight: 500;"></div>
+          </div>
+
+          <div class="card-body">
+            <!-- Search & Filters Toolbar -->
+            <div class="toolbar">
+              <div class="search-box">
+                <span class="search-icon">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </span>
+                <input type="text" id="search-input" class="search-input" placeholder="Search by student name, roll number, or email...">
+              </div>
+              <div class="filter-group">
+                <select id="branch-filter" class="form-select">
+                  <option value="all">All Branches</option>
+                  <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                  <option value="Artificial Intelligence and Data Science">Artificial Intelligence and Data Science</option>
+                  <option value="Information Technology">Information Technology</option>
+                  <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+                  <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                  <option value="Mechanical Engineering">Mechanical Engineering</option>
+                  <option value="Civil Engineering">Civil Engineering</option>
+                </select>
+                <select id="sort-filter" class="form-select" onchange="StudentsPage.onSortChange(this.value)">
+                  <option value="roll_asc" selected>Sort: Roll Number (Ascending)</option>
+                  <option value="roll_desc">Sort: Roll Number (Descending)</option>
+                  <option value="name_asc">Sort: Student Name (A-Z)</option>
+                  <option value="name_desc">Sort: Student Name (Z-A)</option>
+                  <option value="newest">Sort: Recently Added (Newest)</option>
+                  <option value="oldest">Sort: Oldest First</option>
+                  <option value="courses_desc">Sort: Most Courses Enrolled</option>
+                </select>
+                <button class="btn btn-secondary btn-sm" onclick="StudentsPage.resetFilters()">Reset Filters</button>
+              </div>
+            </div>
+
+            <!-- Table with EXACTLY 6 columns -->
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th onclick="StudentsPage.toggleSort('name')" style="cursor: pointer; user-select: none;" title="Sort by Name">
+                      Student Name <span class="sort-indicator" id="sort-icon-name"></span>
+                    </th>
+                    <th onclick="StudentsPage.toggleSort('roll')" style="cursor: pointer; user-select: none;" title="Sort by Roll Number">
+                      Roll Number <span class="sort-indicator" id="sort-icon-roll">▲</span>
+                    </th>
+                    <th>Branch</th>
+                    <th>Email</th>
+                    <th onclick="StudentsPage.toggleSort('courses')" style="cursor: pointer; user-select: none;" title="Sort by Enrolled Courses">
+                      Courses Enrolled <span class="sort-indicator" id="sort-icon-courses"></span>
+                    </th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="students-tbody">
+                  <tr>
+                    <td colspan="6" class="loading-state">
+                      <div class="spinner"></div>
+                      <span>Loading student directory...</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <div>Harsha CourseHub • Smart Student Course Registration System</div>
+        <div style="margin-top: 3px;">Designed &amp; Developed by <strong>Harsha</strong></div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Add Student Modal -->
+  <div class="modal-backdrop" id="addStudentModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Add Student</h3>
+        <button class="close-btn" onclick="App.closeModal('addStudentModal')">&times;</button>
+      </div>
+      <form id="add-student-form" onsubmit="StudentsPage.handleAddSubmit(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="add-name">Full Name <span class="required">*</span></label>
+            <input type="text" id="add-name" class="form-control" placeholder="e.g. Sai Kiran" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="add-roll">Roll Number <span class="required">*</span></label>
+            <input type="text" id="add-roll" class="form-control" placeholder="e.g. 23CS105" required>
+            <div class="form-text">Must be a unique roll number.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="add-branch">Branch <span class="required">*</span></label>
+            <select id="add-branch" class="form-control" required>
+              <option value="">Select Branch</option>
+              <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+              <option value="Artificial Intelligence and Data Science">Artificial Intelligence and Data Science</option>
+              <option value="Information Technology">Information Technology</option>
+              <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+              <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+              <option value="Mechanical Engineering">Mechanical Engineering</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="add-email">Email Address <span class="required">*</span></label>
+            <input type="email" id="add-email" class="form-control" placeholder="e.g. sai.kiran@campus.edu" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="App.closeModal('addStudentModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-add">Save Student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Student Modal -->
+  <div class="modal-backdrop" id="editStudentModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Edit Student</h3>
+        <button class="close-btn" onclick="App.closeModal('editStudentModal')">&times;</button>
+      </div>
+      <form id="edit-student-form" onsubmit="StudentsPage.handleEditSubmit(event)">
+        <input type="hidden" id="edit-id">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="edit-name">Full Name <span class="required">*</span></label>
+            <input type="text" id="edit-name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="edit-roll">Roll Number <span class="required">*</span></label>
+            <input type="text" id="edit-roll" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="edit-branch">Branch <span class="required">*</span></label>
+            <select id="edit-branch" class="form-control" required>
+              <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+              <option value="Artificial Intelligence and Data Science">Artificial Intelligence and Data Science</option>
+              <option value="Information Technology">Information Technology</option>
+              <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+              <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+              <option value="Mechanical Engineering">Mechanical Engineering</option>
+              <option value="Civil Engineering">Civil Engineering</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="edit-email">Email Address <span class="required">*</span></label>
+            <input type="email" id="edit-email" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="App.closeModal('editStudentModal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-submit-edit">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Student Confirmation Modal -->
+  <div class="modal-backdrop" id="deleteStudentModal">
+    <div class="modal-dialog" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3>Confirm Student Deletion</h3>
+        <button class="close-btn" onclick="App.closeModal('deleteStudentModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--text-primary); margin-bottom: 10px;">
+          Are you sure you want to delete student record for <strong id="delete-student-name"></strong> (<span id="delete-student-roll"></span>)?
+        </p>
+        <div id="delete-warning-box" style="padding: 10px 12px; background: var(--status-warn-bg); border: 1px solid var(--status-warn-border); border-radius: var(--radius-sm); font-size: 0.78rem; color: var(--status-warn-text);">
+          Note: Deleting this student will also remove all associated course registration records.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="App.closeModal('deleteStudentModal')">Cancel</button>
+        <button type="button" class="btn btn-danger" id="btn-confirm-delete" onclick="StudentsPage.confirmDelete()">Delete Student</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/students.js"></script>
+</body>
+</html>
